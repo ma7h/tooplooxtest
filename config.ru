@@ -2,13 +2,15 @@
 require 'bundler'
 Bundler.require
 
-app = proc do |env|
-  path = env["PATH_INFO"]
-	if path == "/"
-		[200, {'Content-Type' => 'text/html'}, ['Tooploox test']]
-	else
-		[404, {'Content-Type' => 'text/html'}, ['404 page not found']]
+class App
+
+	def call(env)
+		request = Rack::Request.new(env)
+		path = Rack::Utils.unescape(request.path_info)
+		path == "/" ?	[200, {'Content-Type' => 'text/html'}, ['Tooploox test']] :	[404, {'Content-Type' => 'text/html'}, ['404 page not found']]
 	end
+	
+	
 end
 
-run app
+run App.new
