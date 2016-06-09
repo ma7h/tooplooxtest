@@ -1,2 +1,4 @@
 # tooplooxtest
+just check
+
 ToopLooxTest
