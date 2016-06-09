@@ -1,0 +1,15 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    byebug (9.0.5)
+    rack (1.5.5)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  byebug
+  rack (~> 1.5.2)
+
+BUNDLED WITH
+   1.11.2
