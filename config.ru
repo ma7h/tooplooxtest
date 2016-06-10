@@ -3,11 +3,12 @@ require 'bundler'
 Bundler.require
 
 class Route
-  attr_accessor :verb,:path
+  attr_accessor :verb,:path, :action
 
-  def initialize(verb, path)
+  def initialize(verb, path, &action)
     self.verb = verb
     self.path = path
+		self.action = action
   end
 end
 
@@ -17,8 +18,16 @@ class App
 		request = Rack::Request.new(env)
 		verb = request.request_method.downcase.to_sym
 		path = Rack::Utils.unescape(request.path_info)
-		route = Route.new(verb, path)
-		!route.nil? ? [200, {'Content-Type' => 'text/html'}, ['Tooploox test']] : [404, {'Content-Type' => 'text/html'}, ['404 page not found']]
+		route = Route.new(verb, path) do |params|
+	    <<-html
+	    <pre>
+	      params: #{params.inspect}
+	    </pre>
+	    html
+		end
+		route.nil? ?
+			[404, {'Content-Type' => 'text/html'}, ['404 page not found']] :
+			[200, {'Content-Type' => 'text/html'}, [route.action.call(request.params)]] 
 	end
 
 end
