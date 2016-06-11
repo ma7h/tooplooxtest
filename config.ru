@@ -2,7 +2,7 @@
 require 'bundler'
 Bundler.require
 
-module TooplooxRouter
+module TooplooxTest
 	
   module DSL
     def self.included(base)
@@ -42,7 +42,7 @@ module TooplooxRouter
 end #TooplooxRouter
 
 class App
-	include TooplooxRouter::DSL
+	include TooplooxTest::DSL
 	
 	get ("/") do |params|
     <<-html
