@@ -30,7 +30,7 @@ class App
 		verb = request.request_method.downcase.to_sym
 		path = Rack::Utils.unescape(request.path_info)
 		
-		route = self.class.routes.select { |route| route.verb == verb && route.path == path }.first
+		route = self.class.routes.match(verb, path)
 		route.nil? ?
 			[404, {'Content-Type' => 'text/html'}, ['404 page not found']] :
 			[200, {'Content-Type' => 'text/html'}, [route.action.call(request.params)]] 
