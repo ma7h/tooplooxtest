@@ -2,44 +2,8 @@
 require 'bundler'
 Bundler.require
 
-module TooplooxTest
-	
-  module DSL
-    def self.included(base)
-      base.extend(ClassMethods)
-      base.class_eval do
-        @routes = Routes.new
-      end
-    end
-
-    module ClassMethods
-      attr_reader :routes
-
-      def get(path, &block)
-				routes.add(:get, path, &block)
-			end
-    end
-  end
-
-	class Routes < Array
-
-	  def add(*args, &action)
-	    self << Route.new(*args, &action)
-	  end
-
-		class Route
-		  attr_accessor :verb,:path, :action
-
-		  def initialize(verb, path, &action)
-		    self.verb = verb
-		    self.path = path
-				self.action = action
-		  end
-		end
-	
-	end
-
-end #TooplooxRouter
+$LOAD_PATH.unshift(File.dirname(__FILE__) + '/lib')
+require "tooploox_test"
 
 class App
 	include TooplooxTest::DSL
@@ -47,6 +11,15 @@ class App
 	get ("/") do |params|
     <<-html
     <pre>
+      params: #{params.inspect}
+    </pre>
+    html
+	end
+	
+	get ("/test") do |params|
+    <<-html
+    <pre>
+		test
       params: #{params.inspect}
     </pre>
     html
