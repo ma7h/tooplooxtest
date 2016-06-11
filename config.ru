@@ -11,16 +11,30 @@ class App
 	get ("/") do |params|
     <<-html
     <pre>
+			Hello World!
       params: #{params.inspect}
     </pre>
     html
 	end
 	
-	get ("/test") do |params|
+	get ("/:file.:ext") do |file, ext, params|
     <<-html
     <pre>
-		test
+      file: #{file.inspect}
+      ext: #{ext.inspect}
       params: #{params.inspect}
+    </pre>
+    html
+	end
+	
+	get ("/date/:d/:m/:y") do |d, m, y, params|
+    <<-html
+    <pre>
+			DATE
+			Day: #{d.inspect}
+			Month: #{m.inspect}
+			Year: #{y.inspect}
+	    params: #{params.inspect}
     </pre>
     html
 	end
@@ -30,10 +44,10 @@ class App
 		verb = request.request_method.downcase.to_sym
 		path = Rack::Utils.unescape(request.path_info)
 		
-		route = self.class.routes.match(verb, path)
-		route.nil? ?
-			[404, {'Content-Type' => 'text/html'}, ['404 page not found']] :
-			[200, {'Content-Type' => 'text/html'}, [route.action.call(request.params)]] 
+    route = self.class.routes.match(verb, path)
+    route.nil? ?
+      [404, {'Content-Type' => 'text/html'}, ['404 page not found']] :
+      [200, {'Content-Type' => 'text/html'}, [route.action.call(*route.values.push(request.params))]]
 	end
 
 end
