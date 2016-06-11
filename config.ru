@@ -1,9 +1,9 @@
-#first Rack test.
+# first Rack test.
 require 'bundler'
 Bundler.require
 
 $LOAD_PATH.unshift(File.dirname(__FILE__) + '/lib')
-require "tooploox_test"
+require 'tooploox_test'
 
 class App
 	include TooplooxTest::DSL

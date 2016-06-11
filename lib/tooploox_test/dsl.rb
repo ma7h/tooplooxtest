@@ -1,5 +1,4 @@
-module TooplooxTest
-	
+module TooplooxTest	
   module DSL
     def self.included(base)
       base.extend(ClassMethods)
@@ -11,10 +10,11 @@ module TooplooxTest
     module ClassMethods
       attr_reader :routes
 
-      def get(path, &block)
-				routes.add(:get, path, &block)
-			end
+      def get(path, &block) routes.add(:get, path, &block) end
+      def post(path, &block) routes.add(:get, path, &block) end
+      def put(path, &block) routes.add(:get, path, &block) end
+      def delete(path, &block) routes.add(:get, path, &block) end
+			
     end
   end
-
 end
