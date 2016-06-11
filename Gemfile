@@ -1,6 +1,6 @@
 # Gemfile
-source "http://rubygems.org"
+source 'http://rubygems.org'
 
 gem 'rack', '~> 1.5.2'
-gem 'byebug', require: false
+gem 'byebug'
 gem 'rubocop', require: false
